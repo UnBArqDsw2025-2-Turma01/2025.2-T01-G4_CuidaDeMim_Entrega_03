@@ -1,0 +1,22 @@
+<div id="<%= dom_id pet %>" class="w-full sm:w-auto my-5 space-y-5">
+  <div>
+    <strong class="block font-medium mb-1">Name:</strong>
+    <%= pet.name %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Species:</strong>
+    <%= pet.species %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Age:</strong>
+    <%= pet.age %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Description:</strong>
+    <%= pet.description %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Adopted:</strong>
+    <%= pet.adopted? ? "Yes" : "No" %>
+  </div>
+</div>
