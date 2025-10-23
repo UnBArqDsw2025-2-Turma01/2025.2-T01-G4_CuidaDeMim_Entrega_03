@@ -1,0 +1,84 @@
+<%# 
+  Container principal. 
+  Agora usando a sua cor de fundo customizada.
+%>
+<div class="bg-[#c9791d] w-full flex items-center justify-center p-4">
+
+  <%# 
+    O Card principal.
+    Agora com o 'bg-black' que você pediu.
+  %>
+  <div class="bg-black p-10 rounded-lg shadow-lg w-full max-w-5xl">
+    
+    <%# 
+      Título do Relatório.
+      MUDANÇA: 'text-gray-100' para ser visível no fundo preto.
+    %>
+    <h1 class="text-3xl font-bold text-center text-gray-100 mb-8">
+      <%= @report_data[:title] %>
+    </h1>
+
+    <div class="overflow-hidden shadow border-b border-gray-700 rounded-lg">
+      <table class="min-w-full divide-y divide-gray-700">
+        
+        <%# 
+          Cabeçalho da Tabela.
+          MUDANÇA: 'bg-gray-800' (para combinar com o 'bg-black')
+        %>
+        <thead class="bg-gray-800">
+          <tr>
+            <% @report_data[:headers].each do |header| %>
+              <%# 
+                Célula do Cabeçalho.
+                MUDANÇA: 'text-left' para 'text-center' e cor do texto ajustada.
+              %>
+              <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <%= header %>
+              </th>
+            <% end %>
+          </tr>
+        </thead>
+        
+        <%# 
+          Corpo da Tabela.
+          MUDANÇA: Removido 'bg-white' e 'items-center justify-center' (que não funcionam aqui).
+        %>
+        <tbody class="bg-gray-900 divide-y divide-gray-700">
+          <% @report_data[:rows].each do |row_data| %>
+            <tr>
+              <% row_data.each do |cell_data| %>
+                <%# 
+                  Célula de Dados.
+                  MUDANÇA: Adicionado 'text-center' e cor do texto 'text-gray-200'.
+                %>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-200 text-center">
+                  <%= cell_data %>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+
+          <%# Mensagem de "Nenhum resultado" %>
+          <% if @report_data[:rows].empty? %>
+            <tr>
+              <td colspan="<%= @report_data[:headers].length %>" class="px-6 py-4 text-center text-gray-500">
+                Nenhum dado encontrado para este relatório.
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+
+      </table>
+    </div>
+
+    <%# 
+      Link de "Voltar".
+      MUDANÇA: Cores ajustadas para o fundo preto.
+    %>
+    <div class="mt-8 text-center">
+      <%= link_to '← Gerar Outro Relatório', admin_reports_path, 
+          class: "text-blue-400 hover:text-blue-300 font-medium transition-colors" %>
+    </div>
+
+  </div>
+</div>
