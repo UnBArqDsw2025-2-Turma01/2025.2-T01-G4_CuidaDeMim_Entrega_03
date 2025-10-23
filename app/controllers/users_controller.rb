@@ -21,16 +21,22 @@ class UsersController < ApplicationController
 
   # POST /users or /users.json
   def create
-    @user = User.new(user_params)
+    result = Users::RegisterCommand.new(user_params).call
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: "User was successfully created." }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if result.success?
+      render json: result.data, status: :created
+    else
+      render json: { errors: result.errors }, status: :unprocessable_entity
+    end
+  end
+
+  def login
+    result = Users::LoginCommand.new(params[:email], params[:password]).call
+
+    if result.success?
+      render json: result.data, status: :ok
+    else
+      render json: { errors: result.errors }, status: :unauthorized
     end
   end
 
