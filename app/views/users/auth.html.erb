@@ -1,0 +1,24 @@
+<h1>Welcome</h1>
+
+<div style="display: flex; gap: 2rem;">
+  <div>
+    <h2>Login</h2>
+    <%= form_with url: login_path, local: true do |f| %>
+      <div>
+        <%= f.label :email %><br>
+        <%= f.email_field :email %>
+      </div>
+
+      <div>
+        <%= f.label :password %><br>
+        <%= f.password_field :password %>
+      </div>
+
+      <div>
+        <%= f.submit "Login" %>
+      </div>
+    <% end %>
+  </div>
+  <p>Novo usuário?</p>
+  <%= link_to "Cadastre-se", new_user_path %>
+</div>

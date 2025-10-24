@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
+  root "users#auth"
   resources :users
+  post "login", to: "users#login"
   resources :pets
   
   # --- ADICIONE ESTE BLOCO ---

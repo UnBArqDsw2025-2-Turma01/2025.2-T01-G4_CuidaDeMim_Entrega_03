@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     result = Users::RegisterCommand.new(user_params).call
 
     if result.success?
-      render json: result.data, status: :created
+      redirect_to root_path
     else
       render json: { errors: result.errors }, status: :unprocessable_entity
     end
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
     result = Users::LoginCommand.new(params[:email], params[:password]).call
 
     if result.success?
-      render json: result.data, status: :ok
+      redirect_to pets_path
     else
       render json: { errors: result.errors }, status: :unauthorized
     end
@@ -61,6 +61,9 @@ class UsersController < ApplicationController
       format.html { redirect_to users_path, notice: "User was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
     end
+  end
+
+  def auth
   end
 
   private
