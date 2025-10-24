@@ -7,4 +7,12 @@ class Dog < Pet
   def movement
     "Correndo e abanando o rabo! (Movimento de Dog)"
   end
+  
+  def info
+    "Dog: nome=#{name}, espécie=#{species}"
+  end
+
+  def tipo
+    "Dog"
+  end
 end
