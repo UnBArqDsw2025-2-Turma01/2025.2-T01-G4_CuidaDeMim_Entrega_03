@@ -1,6 +1,17 @@
 Rails.application.routes.draw do
   resources :users
   resources :pets
+  
+  # --- ADICIONE ESTE BLOCO ---
+  # Adiciona as rotas para os relatórios
+  namespace :admin do
+    # Isso cria duas rotas:
+    # 1. GET /admin/reports (para a página 'index')
+    # 2. POST /admin/reports (para a ação 'create')
+    resources :reports, only: [:index, :create]
+  end
+  # -------------------------
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
