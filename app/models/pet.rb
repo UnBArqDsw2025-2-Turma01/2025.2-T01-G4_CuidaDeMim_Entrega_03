@@ -11,5 +11,15 @@ class Pet < ApplicationRecord
   def movement
     "(Se movendo de forma genérica)"
   end
+  
+  # Método simples para mostrar informações básicas
+  def info
+    "Pet genérico: nome=#{name}, espécie=#{species}"
+  end
+
+  # Método simples para retornar o tipo do pet
+  def tipo
+    "Genérico"
+  end
 
 end
