@@ -7,4 +7,9 @@ class Pet < ApplicationRecord
   def sound
     "..."
   end
+
+  def movement
+    "(Se movendo de forma genérica)"
+  end
+
 end
