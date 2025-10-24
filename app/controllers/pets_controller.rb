@@ -78,5 +78,46 @@ class PetsController < ApplicationController
       # A Factory precisa do 'species' para funcionar, então ele deve ser permitido aqui.
       def pet_params
       params.require(:pet).permit(:name, :species, :age, :description, :adopted)
+    end
+
+    # Constrói a cadeia de decoradores para o cadastro do pet
+    # Demonstra o padrão Decorator em ação
+    def cadastrar_com_decorators(pet)
+      # Componente base: cadastro simples
+      cadastro = CadastroPetSimples.new
+
+      # Adiciona o decorador de notificação (por último, para notificar após sucesso)
+      cadastro = NotificadorDecorator.new(cadastro, canal: 'email')
+
+      # Adiciona o decorador de validação (verifica dados antes de cadastrar)
+      cadastro = ValidadorDecorator.new(cadastro)
+
+      # Adiciona o decorador de autenticação (verifica acesso antes de tudo)
+      # TODO: Integrar com sistema de autenticação real (Devise, etc.)
+      # Por enquanto, simula autenticação como true
+      autenticado = true # Altere para false para testar bloqueio
+      parceiro = "Parceiro Exemplo ONG" # Simula o parceiro autenticado
+      cadastro = AutenticadorDecorator.new(cadastro, autenticado: autenticado, parceiro: parceiro)
+
+      # Executa a cadeia de decoradores
+      cadastro.cadastrar(pet)
+    end
+
+    def destroy(pet)
+      if pet.destroy
+        Rails.logger.info("Pet '#{pet.name}' destruído com sucesso.")
+
+        respond_to do |format|
+          format.html { redirect_to pets_url, notice: "Pet foi deletado com sucesso" }
+          format.json { render json: { message: "Pet deletado com sucesso" }, status: :ok }
+        end
+      else
+        Rails.logger.error("Falha ao deletar o pet '#{pet.name}': #{pet.errors.full_messages.join(', ')}")
+
+        respond_to do |format|
+          format.html { redirect_to pets_url, alert: "Falha ao deletar o pet." }
+          format.json { render json: { error: "Falha ao deletar o pet" }, status: :unprocessable_entity }
+        end
       end
+    end
   end

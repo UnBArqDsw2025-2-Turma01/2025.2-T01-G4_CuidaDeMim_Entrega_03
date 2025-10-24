@@ -52,4 +52,25 @@ class ValidadorDecorator < CadastroPetDecorator
       erros: erros
     }
   end
+
+  # Adiciona comportamento de exclusão com validação
+  # @param pet [Pet] O objeto pet a ser excluído
+  # @return [Hash] Resultado da exclusão
+  def destroy(pet)
+    if pet.destroy
+      Rails.logger.info("Pet '#{pet.name}' destruído com sucesso.")
+      {
+        success: true,
+        message: "Pet foi deletado com sucesso",
+        pet: pet
+      }
+    else
+      Rails.logger.error("Falha ao deletar o pet '#{pet.name}': #{pet.errors.full_messages.join(', ')}")
+      {
+        success: false,
+        message: "Falha ao deletar o pet.",
+        pet: pet
+      }
+    end
+  end
 end
