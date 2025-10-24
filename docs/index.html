@@ -151,6 +151,14 @@
     }
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <!-- Mermaid support for UML diagrams -->
+  <script src="//cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-mermaid@2/dist/docsify-mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      window.mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', theme: 'default' });
+    }
+  </script>
 </body>
 
 </html>
