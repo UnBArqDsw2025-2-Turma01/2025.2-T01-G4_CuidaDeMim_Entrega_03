@@ -53,5 +53,14 @@ module Reports
         { id: 120, pet: "Toby", ong: "ONG Salva Cão", adotante: "Carla Dias", data: "2025-10-12" }
       ]
     end
+    def self.fetch_partnership_data
+      [
+        { id: 1, nome: "ONG Patinhas Felizes", contato: "c  ontato@patinhas.org", status: "Ativa", pets_cadastrados: 8, adocoes_efetivadas: 5 },
+        { id: 2, nome: "ONG Salva Cão", contato: "contato@salvacao.org", status: "Ativa", pets_cadastrados: 7, adocoes_efetivadas: 5 },
+        { id: 3, nome: "ONG Focinhos Carentes", contato: "ajuda@focinhos.org", status: "Ativa", pets_cadastrados: 6, adocoes_efetivadas: 4 },
+        { id: 4, nome: "Clínica Pet Saúde", contato: "clinica@petsaude.com", status: "Pendente", pets_cadastrados: 0, adocoes_efetivadas: 0 },
+        { id: 5, nome: "Pet Shop Mega", contato: "gerencia@megapet.com", status: "Inativa", pets_cadastrados: 0, adocoes_efetivadas: 0 }
+      ]
+    end
   end
 end

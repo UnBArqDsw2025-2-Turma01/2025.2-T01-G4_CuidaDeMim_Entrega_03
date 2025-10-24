@@ -1,7 +1,8 @@
 class ReportContext
   STRATEGIES = {
     'user_report' => Reports::UserReportStrategy.new,
-    'adoption_report' => Reports::AdoptionReportStrategy.new
+    'adoption_report' => Reports::AdoptionReportStrategy.new,
+    'partnership_report' => Reports::PartnershipReportStrategy.new
   }.freeze
   attr_reader :strategy
 
