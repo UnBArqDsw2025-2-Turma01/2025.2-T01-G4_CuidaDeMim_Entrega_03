@@ -20,4 +20,9 @@ class ReportContext
   def self.available_strategies
     STRATEGIES.keys
   end
+
+  # Método simples para verificar se uma estratégia é válida
+  def self.valid_strategy?(report_type)
+    STRATEGIES.key?(report_type.to_s)
+  end
 end
