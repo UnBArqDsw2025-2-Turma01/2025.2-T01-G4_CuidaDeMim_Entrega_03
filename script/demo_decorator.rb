@@ -216,8 +216,28 @@ if resultado10[:success]
 end
 
 # ==============================================================================
+# DEMONSTRAÇÃO 7: Com Formatação
+# ==============================================================================
+
+puts "\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+puts "🔹 Demo 7: Cadastro com Formatação"
+puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+# Pet com dados não formatados
+pet7 = Pet.new(name: "  fido  ", species: "  DOG  ", age: 4, description: "  um cãozinho brincalhão  ")
+cadastro = FormatadorDecorator.new(CadastroPetSimples.new)
+
+puts "\n📝 Tentando cadastrar: #{pet7.name} (não formatado)"
+resultado11 = cadastro.cadastrar(pet7)
+puts "✅ #{resultado11[:message]}" if resultado11[:success]
+puts "Pet formatado: #{resultado11[:pet].name}, #{resultado11[:pet].species}, #{resultado11[:pet].description}"
+
+Pet.destroy_all
+
+# ==============================================================================
 # RESUMO
 # ==============================================================================
+
 
 puts "\n"
 puts "╔═══════════════════════════════════════════════════════════════╗"
@@ -233,6 +253,7 @@ puts "║     • CadastroPetDecorator (Decorador Base)                  ║"
 puts "║     • ValidadorDecorator                                     ║"
 puts "║     • AutenticadorDecorator                                  ║"
 puts "║     • NotificadorDecorator                                   ║"
+puts "║     • FormatadorDecorator                                    ║"
 puts "║                                                               ║"
 puts "║  🎯 Vantagens demonstradas:                                   ║"
 puts "║     • Flexibilidade na composição                            ║"
