@@ -37,6 +37,12 @@ class PetsController < ApplicationController
           # Logando o novo método de movimento
           puts "LOG: Testando método exclusivo (movement): #{@pet.movement}" if @pet.respond_to?(:movement)
 
+          puts "LOG: Testando método (info): #{@pet.info}" if @pet.respond_to?(:info)
+          puts "LOG: Testando método (tipo): #{@pet.tipo}" if @pet.respond_to?(:tipo)
+          
+          puts "LOG: Testando método (vaccine_info): #{@pet.vaccine_info}" if @pet.respond_to?(:vaccine_info)
+
+
           format.html { redirect_to pet_url(@pet), notice: "Pet cadastrado com sucesso (via Factory)!" }
           format.json { render :show, status: :created, location: @pet }
       else
@@ -103,21 +109,4 @@ class PetsController < ApplicationController
       cadastro.cadastrar(pet)
     end
 
-    def destroy(pet)
-      if pet.destroy
-        Rails.logger.info("Pet '#{pet.name}' destruído com sucesso.")
-
-        respond_to do |format|
-          format.html { redirect_to pets_url, notice: "Pet foi deletado com sucesso" }
-          format.json { render json: { message: "Pet deletado com sucesso" }, status: :ok }
-        end
-      else
-        Rails.logger.error("Falha ao deletar o pet '#{pet.name}': #{pet.errors.full_messages.join(', ')}")
-
-        respond_to do |format|
-          format.html { redirect_to pets_url, alert: "Falha ao deletar o pet." }
-          format.json { render json: { error: "Falha ao deletar o pet" }, status: :unprocessable_entity }
-        end
-      end
-    end
-  end
+end

@@ -22,4 +22,8 @@ class Pet < ApplicationRecord
     "Genérico"
   end
 
+  def vaccine_info
+    "Requer vacinas básicas."
+  end
+
 end
