@@ -1,4 +1,5 @@
 class PetsController < ApplicationController
+
   before_action :set_pet, only: %i[ show edit update destroy ]
 
   # GET /pets or /pets.json
@@ -26,15 +27,18 @@ class PetsController < ApplicationController
   # POST /pets or /pets.json
   def create
       # APLICAÇÃO DO PADRÃO CRIACIONAL (FACTORY METHOD)
-      # Ele apenas delega a responsabilidade para a PetFactory.
+      # 1. Cria o objeto Pet (e a subclasse correta)
       @pet = PetFactory.create(pet_params)
 
+      # APLICAÇÃO DO PADRÃO ESTRUTURAL (DECORATOR)
+      # 2. Usa a cadeia de decoradores para executar o cadastro com todas as camadas
+      resultado = cadastrar_com_decorators(@pet)
+
       respond_to do |format|
-      if @pet.save
+      if resultado[:success]
           # Lógica de demonstração no console (verifique a saída do 'rails s')
           puts "LOG: Pet criado com sucesso usando a Factory. Tipo: #{@pet.species}"
           puts "LOG: Testando método exclusivo (sound): #{@pet.sound}" if @pet.respond_to?(:sound)
-          # Logando o novo método de movimento
           puts "LOG: Testando método exclusivo (movement): #{@pet.movement}" if @pet.respond_to?(:movement)
 
           puts "LOG: Testando método (info): #{@pet.info}" if @pet.respond_to?(:info)
@@ -46,8 +50,12 @@ class PetsController < ApplicationController
           format.html { redirect_to pet_url(@pet), notice: "Pet cadastrado com sucesso (via Factory)!" }
           format.json { render :show, status: :created, location: @pet }
       else
+          # Se falhou, a cadeia retornou um erro (do Logger, Autenticador ou Validador).
+          # Adiciona o erro ao objeto @pet para que a view 'new' possa exibi-lo.
+          @pet.errors.add(:base, resultado[:message]) 
           format.html { render :new, status: :unprocessable_entity }
-          format.json { render json: @pet.errors, status: :unprocessable_entity }
+          # Para APIs, retorna o JSON de erro do decorador.
+          format.json { render json: resultado, status: :unprocessable_entity }
       end
       end
   end
@@ -92,18 +100,18 @@ class PetsController < ApplicationController
       # Componente base: cadastro simples
       cadastro = CadastroPetSimples.new
 
-      # Adiciona o decorador de notificação (por último, para notificar após sucesso)
       cadastro = NotificadorDecorator.new(cadastro, canal: 'email')
 
-      # Adiciona o decorador de validação (verifica dados antes de cadastrar)
+      # Adiciona o decorador de validação (executado antes da notificação)
       cadastro = ValidadorDecorator.new(cadastro)
 
-      # Adiciona o decorador de autenticação (verifica acesso antes de tudo)
       # TODO: Integrar com sistema de autenticação real (Devise, etc.)
-      # Por enquanto, simula autenticação como true
       autenticado = true # Altere para false para testar bloqueio
       parceiro = "Parceiro Exemplo ONG" # Simula o parceiro autenticado
       cadastro = AutenticadorDecorator.new(cadastro, autenticado: autenticado, parceiro: parceiro)
+      
+      # NOVO INCREMENTO (LoggerDecorator é o wrapper mais externo para auditoria)
+      cadastro = LoggerDecorator.new(cadastro)
 
       # Executa a cadeia de decoradores
       cadastro.cadastrar(pet)
