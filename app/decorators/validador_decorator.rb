@@ -3,6 +3,10 @@
 # Decorador concreto que adiciona validação de dados antes do cadastro
 # Responsabilidade: Verificar se os dados do pet são válidos antes de prosseguir
 class ValidadorDecorator < CadastroPetDecorator
+  def initialize(cadastro_pet)
+    super(cadastro_pet)
+  end
+
   # Adiciona comportamento de validação antes de cadastrar
   # @param pet [Pet] O objeto pet a ser cadastrado
   # @return [Hash] Resultado da validação e cadastro
