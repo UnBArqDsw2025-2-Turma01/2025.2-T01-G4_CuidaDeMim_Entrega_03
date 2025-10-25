@@ -15,4 +15,8 @@ class Dog < Pet
   def tipo
     "Dog"
   end
+  
+  def vaccine_info
+    "Requer vacinas V10 e Antirrábica."
+  end
 end

@@ -17,4 +17,8 @@ class Cat < Pet
     "Cat"
   end
 
+  def vaccine_info
+    "Requer vacinas V4/V5 (Felin-O-Vax) e Antirrábica."
+  end
+
 end
