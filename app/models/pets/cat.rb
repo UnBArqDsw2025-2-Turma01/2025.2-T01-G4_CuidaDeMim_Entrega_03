@@ -8,5 +8,13 @@ class Cat < Pet
   def movement
     "Andando silenciosamente... (Movimento de Cat)"
   end
+  
+  def info
+    "Cat: nome=#{name}, espécie=#{species}"
+  end
+
+  def tipo
+    "Cat"
+  end
 
 end

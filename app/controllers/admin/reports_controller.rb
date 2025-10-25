@@ -5,7 +5,10 @@ class Admin::ReportsController < ApplicationController
   end
   def create
     report_type = params[:report_type]
-    context = ReportContext.new(report_type)
+    # Exemplo de extensão: permite filtrar usuários por tipo se passado
+    options = {}
+    options[:tipo] = params[:tipo] if params[:tipo].present? && report_type == 'user_report'
+    context = ReportContext.new(report_type, options)
     @report_data = context.execute_report
     respond_to do |format|
       format.html do
